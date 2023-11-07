@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../component/head',{data:{title:'Product list'}}) %>
+</head>
+
+<body>
+    <%-include("../component/menu")%>
+
+        <div class="container">
+            <div class="row pt-5">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Name</th>
+                        <td>
+                            <%=product.name%>
+                        </td>
+                        <th>description</th>
+                        <td>
+                            <%=product.description%>
+                        </td>
+                        <th>price</th>
+                        <td>
+                            <%=product.price%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-12 pt-4">
+                <a href="/product/update/<%=product.id %>" class="btn btn-primary">Update</a>
+                <form method="post" action="/product/<%= product.id %>">
+                    <input type="submit" value="delete" class="btn bth-danger mt-4">
+                </form>
+            </div>
+        </div>
+        <%- include('../component/footer')%>
+
+</body>
+
+</html>

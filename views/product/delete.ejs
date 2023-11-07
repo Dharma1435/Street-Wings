@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <%- include("../component/head",{data:{title:"Product Delete"}})%>
+            <style>
+                  .view {
+                        display: flex;
+                        justify-content: center;
+                        color: rgb(108, 108, 197);
+                        font-family: 'Times New Roman', Times, serif;
+                  }
+            </style>
+</head>
+
+<body>
+      <div><%- include("../component/menu")></div>
+      <div class="container">
+            <div class="offset-sm-3 col-6 mt-5">
+                  <h1 class="view">Delete Product</h1>
+                  <form action="/product/delete" method="post">
+                        <div class="mb-3">
+                              <label for="exampleInputId1" class="form-label">Id</label>
+                              <input type="text" name="id" class="form-control">
+                        </div>
+                        <input type="button" value="Delete Product" class="btn btn-outlint-danger">
+                  </form>
+            </div>
+      </div>
+</body>
+
+</html>
