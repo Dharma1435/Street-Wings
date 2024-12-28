@@ -28,7 +28,7 @@ function decrypt(text,key){
 
 async function hash(pt,salt=10){
     let encrypt=await bcrypt.hash(pt,salt).catch((error)=>{
-        console.log(error)
+       return {error}
     })
     if(!encrypt||(encrypt&&encrypt.error)){
         return {error:encrypt.error}
@@ -40,6 +40,7 @@ async function compare(pt,et){
     let check=await bcrypt.compare(pt,et).catch((error)=>{
         return {error}
     })
+   
     if(!check||(check&&check.error)){
         return {error: check && check.error ? check.error:true} 
     }

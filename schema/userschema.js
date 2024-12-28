@@ -1,4 +1,5 @@
 let { sequelizeCon, Model,DataTypes } = require("../init/dbconfig");
+
 class User extends Model {}
 User.init(
   {
@@ -28,10 +29,10 @@ User.init(
       type:DataTypes.STRING(500),
       allowNull:true,
     },
-    // otp:{
-    //   type:DataTypes.STRING,
-    //   allowNull:false
-    // },
+    otp:{
+      type:DataTypes.STRING,
+      allowNull:true
+    },
     is_active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

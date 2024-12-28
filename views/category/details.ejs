@@ -14,27 +14,24 @@
                     <tr>
                         <th>Name</th>
                         <td>
-                            <%=product.name%>
+                            <%=category.name%>
                         </td>
-                        <th>description</th>
+                        <th>Image</th>
                         <td>
-                            <%=product.description%>
-                        </td>
-                        <th>price</th>
-                        <td>
-                            <%=product.price%>
+                            <%=category.img%>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="col-sm-12 pt-4">
-                <a href="/product/update/<%=product.id %>" class="btn btn-primary">Update</a>
-                <form method="post" action="/product/<%= product.id %>">
+                <a href="/category/update/<%=category.id %>" class="btn btn-primary">Update</a>
+                <form method="post" action="/category/<%= category.id %>">
                     <input type="submit" value="delete" class="btn bth-danger mt-4">
                 </form>
             </div>
         </div>
         <%- include('../component/footer')%>
+
 </body>
 
 </html>

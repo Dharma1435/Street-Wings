@@ -17,6 +17,7 @@ async function create(params){
     let data=await Product.create(userData).catch((err)=>{
         return {error:err}
     })
+    console.log('data',data);
     if(!data||(data&&data.error)){
        return {error:"internal server error"}
     }
@@ -55,7 +56,6 @@ async function check(data){
 //     }
 //     return {data:data}
 // }
-
 async function viewAll(params,permission){
     let limit=(params.limit)?parseInt(params.limit):10;
     let page=(params.page)?parseInt(params.page):1;
@@ -64,6 +64,7 @@ async function viewAll(params,permission){
     let where = {}
     if(!permission.product_restore){
         where = {is_deleted:false}
+
 
     }
 
@@ -115,13 +116,14 @@ async function checkupdate(data){
     return {data:valid}
 }
 
-async function update(id,params){
+async function update(id,params)
+{
     params.id=id;
     let valid=await checkupdate(params).catch(err=>{    //user data validation
         return {error:err}
     }) 
     if(!valid||(valid&&valid.error)){
-        console.log(valid.error)
+        // console.log(valid.error)
         return {error:valid.error}
     }
     let data =await Product.findOne({where:{id},raw:true}).catch(err=>{   //check product in db
@@ -210,12 +212,12 @@ async function restore(id){
     })
    
     if(!valid||(valid&&valid.error)){
-        console.log(valid.error)
         return {error:valid.error}
     }
-
+    
     //check if product exist
-
+    
+    
 
     let data=await Product.findOne({where:{id:id}}).catch(error=>{
         return {error}

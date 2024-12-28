@@ -1,0 +1,37 @@
+<html>
+    <head>
+        
+        <%- include('../component/head',{data:{title:'Product Add'}})%>
+        
+    </head>
+    <body>
+        <%- include('../component/menu')%>
+        <div class="container">
+            <div class="offset-sm-3 col-6">
+                <form action="/category/create" method="post">
+                    <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    name:<input type="text" name="categoryname" class="form-control" placeholder="Please enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">IMAGE</label>
+                    img:<input type="text" name="Image" class="form-control" placeholder="description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputId1" class="form-label">Created By</label>
+                        <input type="text"  inputmode="numeric" name="created_by" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputId1" class="form-label">Updated By</label>
+                        <input type="text" inputmode="numeric" name="updated_by" class="form-control">
+                    </div>
+                    
+                    <input type="submit" class="btn btn-outline-success" value="Add">
+                </form>
+            </div>
+            
+        </div>
+        <%- include("../component/footer")%>
+        
+    </body>
+</html>

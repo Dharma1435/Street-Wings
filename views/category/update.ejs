@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include('../component/head',{data:{title:"category Add"}}) %>
+</head>
+<body>
+    <%- include("../component/menu") %>
+    <div class="container">     
+        <div class="offset-sm-3 col-6">
+            <form action="/category/<%=category.id%>" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" value="<%= category.name%>" class="form-control" placeholder="Enter category name"> 
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image</label>
+                    <input type="file" name="Image" value="<%= category.img%>" class="form-control"> 
+                </div>
+                
+                <input type="submit" class="btn btn-primary" value="update category">
+            </form>
+        </div>
+        <%- include("../component/footer")%>
+    </div>
+    
+</body>
+</html>

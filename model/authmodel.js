@@ -4,6 +4,7 @@ let { User } = require('../schema/userschema')
 let { Userpermission } = require('../schema/userpermission')
 let bcrypt = require('../helpers/security');
 let otpGenerator=require('otp-generator')
+let {mail}=require('../helpers/mailer')
 
 
 async function register(params) {
@@ -39,8 +40,9 @@ async function register(params) {
     let data = await User.create(userData).catch((err) => {
         return { error: err }
     })
+    console.log("42",data)
     if (!data || (data && data.error)) {
-        return { error: "internal server error" }
+        return { error: "internal server error1" }
     }
     //  return {data:data}
     let userpermission = {
@@ -147,7 +149,7 @@ async function forgotpassword(datapass){
     })
     if(!valid||(valid&&valid.error)){
         let msg=[]
-        for(let i of valid.error.message){
+        for(let i of valid.error.details){
             msg.push(i.message)
         }
         return {error:msg}
@@ -162,16 +164,99 @@ async function forgotpass(params){
     if(!valid||(valid&&valid.error)){
         return {error:valid.error}
     }
-    let find =await User.findOne({where :{email_id:params.id}}).catch(err=>{
+    let find =await User.findOne({where :{email_id:params.email}}).catch(err=>{
         return {error:err}
     })
+   
     if(!find||(find&&find.error)){
         return {error:"user is not found"}
     }   
-    let otp =otpGenerator.generate
+    let otp =otpGenerator.generate(6,{upperCaseAlphabets:false,specialChars:false,lowerCaseAlphabets:false})
 
+    let hashotp=await bcrypt.hash(otp).catch(error=>{
+        return {error}
+    })
+    if(!hashotp||(hashotp&&hashotp.error)){
+        return {error:hashotp.error}
+    }
+    let save= await User.update({otp:hashotp.data},{where:{id:find.id}}).catch(error=>{
+        return {error}
+    })
+    if(!save||(save&&save.error)){
+        return {error:save.error}
+    }
+    let mailopt={
+        from:"guptadharamraj399@gmail.com",
+        to:params.email,
+        subject:'mail testing',
+        text:`This is your otp :- ${otp}`
+    }
+    let sendmail=await mail(mailopt).catch(error=>{
+        return {error}
+    })
+    console.log(sendmail);
+    if(!sendmail||(sendmail&&sendmail.error)){
+        return {error:"mail is not send"}
+    }
+    return {data:`mail is send to ${params.email}`}
+
+
+}
+async function checkpass(params){
+    let schema=joi.object({
+        email:joi.string().required(),
+        otp:joi.string().required(),
+        password:joi.string().required()
+    })
+    let valid =await schema.validateAsync(params,{abortEarly:false}).catch(error=>{
+        return{error}
+    })
+    if(!valid||(valid&&valid.error)){
+        let msg=[]
+        for(let i of valid.error.details){
+            msg.push(i.message)
+        }
+        return {error:msg}
+    }
+    return{data:valid}
+}
+
+async  function resetpass(email,params){
+    params.email=email
+    let valid=await checkpass(params).catch(error=>{
+        return{error}
+    })
+    if(!valid||(valid&&valid.error)){
+        return {error:valid.error}
+    }
+    let finduser=await User.findOne({where:{email_id:params.email}}).catch(error=>{
+        return {error}
+    })
+    if(!finduser||(finduser&&finduser.error)){
+        return {error:finduser.error}
+    }
+    let check =await bcrypt.compare(params.otp,finduser.otp).catch(error=>{
+        return {error}
+    })
+    console.log("241",check)
+    if(!check||(check&&check.error)){
+        return {error:check.error}
+    }
+    let password=await bcrypt.hash(params.password).catch(error=>{
+        return {error}
+    })
+    if(!password||(password&&password.error)){
+        return {error:password.error}
+    }
+    let resetpassword=await User.update({password:password.data},{where:{id:finduser.id}}).catch(error=>{
+        return {error}
+    })
+    if(!resetpassword||(resetpassword&&resetpassword.error)){
+        return {error:resetpassword.error}
+    }
+    return {data:"Password is change successfully!!!"}
 }
 
 
 
-module.exports = { register, userlogin }
+module.exports = { register, userlogin,forgotpass,resetpass }

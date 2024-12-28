@@ -1,5 +1,5 @@
 let mailer=require('nodemailer')
-let otp=require('otp-generator')
+//let otp=require('otp-generator')
 function mail(mailoption){
     return new Promise((res,rej)=>{
         let transporter=mailer.createTransport({
@@ -11,7 +11,7 @@ function mail(mailoption){
                 pass:"mpks jtxy iyeo vosi"
             }
         })
-            transporter.sendMail(mailoption,(err,info)=>{
+            transporter.sendMail(mailoption,(err)=>{
                 if(err){
                     return rej(err)
                 }   

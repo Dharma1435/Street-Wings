@@ -9,6 +9,6 @@
         "user":"/user",
         "product":"/product"
     },
-    "Mysql":"Mysql:/root:@"
+    "Mysql":"Mysql:/root@ecom"
 
 }

@@ -27,7 +27,7 @@ async function viewAll(req,res){
         let error=(products&&products.error)?products.error:"internal server issue";
         return res.render("product/view",{error:products.error})
     }
-    console.log(products.total)
+    // console.log(products.total)
     return res.render('product/view',{products:products.data,total:products.total,page:products.page,limit:products.limit,permissions:req.userData.permissions})
 }
  
@@ -80,7 +80,6 @@ async function pDeleted(req,res){
 }
 
 async function prestore(req,res){
-    console.log("line 83 controller")
     let products=await productmodel.restore(req.params.id).catch(err=>{
         return {error:err}
     })

@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-   <%- include('./component/head',{data:{title:'index page'}}) %>
+   <%-include('./component/head',{data:{title:'index page'}}) %>
 </head>
 
 <body>
     <div class="container">
-        <div class="row" id="first-div">
+        
             
-        </div>
 
     </div>
     <div class="col-6">
+        <div class="offset-sm-3">
         <div class="col-12" id="first-div">     
             <form action="/register" method="post">
 
@@ -23,7 +23,7 @@
                 phone: <input type="text" name="phone" id=""><br><br>
 
                 password:<input type="password" name="password" value=""><br><br>
-                submit:<input type="submit" value="">
+                <input type="submit" value="submit">
 
             </form>
 
@@ -31,18 +31,20 @@
         <div class="col-12" id="second-div">
             <form action="/login" method="post">
 
-                email: <input type="text" name="email" required value="dharamraj@gmail.com"><br><br>
-                 password:<input type="password" name="password" value="123456"><br><br>
-                submit:<input type="submit">
+                email: <input type="text" name="email" required value=""><br><br>
+                 password:<input type="password" name="password" value=""><br><br>
+                <input type="submit">
             </form>
 
         </div>
     </div>
-    <div class="col-12 text-center pt-5">
-        <button  class="btn btn-primary" id="1">first</button>
-        <button class="btn btn-primary" id="2">second</button>
     </div>
-   <%- include('./component/footer') %>
+    <div class="col-12 text-center pt-5">
+        <button  class="btn btn-primary" id="reg-1">Register</button>
+        <button class="btn btn-primary" id="sec-2">Login</button>
+    </div>
+    <a href="/forget">Forget password</a>
+   <%-include('./component/footer')%>
    <script src="/js/jquerypage.js"></script>
 </body>
 

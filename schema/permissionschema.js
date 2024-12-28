@@ -2,7 +2,6 @@
 let {sequelizeCon,Model,DataTypes}=require('../init/dbconfig')
 
 class Permission extends Model{}
-sequelizeCon.sync({alter:true})
 Permission.init(
     {
         id:{

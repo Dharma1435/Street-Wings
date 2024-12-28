@@ -15,13 +15,13 @@ function auth(permission) {
             return res.status(401).send("token is not matched")
         }
         console.log(decrypt)
-        let query = `select user.id,user.name,permission.name as permission
-                   from user
-                   left join userpermission on user.id = userpermission.user_id
-                   left join permission on userpermission.permission_id = permission.id
-                   where user.id = '${decrypt.id}' and token = '${token}'`;
+                    let query = `select user.id,user.name,permission.name as permission
+                            from user
+                            left join userpermission on user.id = userpermission.user_id
+                            left join permission on userpermission.permission_id = permission.id
+                            where user.id = '${decrypt.id}' and token = '${token}'`;
 
-        let user = await sequelizeCon.query(query, { type: QueryTypes.SELECT }).catch((err) => {
+        let user = await sequelizeCon.query(query, { type:QueryTypes.SELECT }).catch((err) => {
             return { error: err }
         })
 

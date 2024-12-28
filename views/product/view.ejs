@@ -1,5 +1,5 @@
-<html>
-
+<!DOCTYPE <html>
+    <html lang="en">
 <head>
     <%- include('../component/head',{data:{title:'product list'}}) %>
 
@@ -43,10 +43,10 @@
 
                                     <td>
                                         <a href="/product/<%=rows.id%>" class="btn btn-primary">VIEW</a>
-                                        <a href="/product/update/<%=rows.id%>" class="btn btn-primary">Update</a>
+                                        <a href="/product/update/<%=rows.id%>" class="btn btn-dark">Update</a>
                                         <% if(rows.is_deleted==false && permissions.product_delete) {%>
                                             <form action="/product/delete/<%=rows.id%>" method="post">
-                                                <input type="submit" value="Delete" class="btn btn-danger">
+                                                <input type="submit" value="Delete" class="btn btn-outline-danger">
                                             </form>
                                             <% }else if(rows.is_deleted==true && permissions.product_restore){%>
                                                 <form action="/product/restore/<%=rows.id%>" method="post">
@@ -64,7 +64,7 @@
             <%let totalpage=Math.ceil(total/limit);%>
                 <%for(let i=1;i<=totalpage;i++){%>
                     <%let url=`product?limit=${limit}&&page=${i}`%>
-                        <a href=<%=url %> class="btn btn-primary"><%=i%></a>
+                        <a href="<%=url%>" class="btn btn-light"><%=i%></a>
                         <%}%>
 
                             <%- include('../component/footer') %>

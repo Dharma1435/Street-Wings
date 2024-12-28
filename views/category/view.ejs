@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <%-include("../component/head",{data:{title:"View Category"}})%>
+            <style>
+                  .view {
+                        display: flex;
+                        justify-content: center;
+                        color: rgb(108, 108, 197);
+                        font-family: 'Times New Roman', Times, serif;
+                  }
+
+                  td {
+                        font-family: Georgia, 'Times New Roman', Times, serif;
+                  }
+
+                  th {
+                        font-family: cursive;
+                  }
+            </style>
+</head>
+
+<body>
+      <%-include("../component/menu")%>
+            <div class="container">
+                  <div class="row pt-3">
+                        <h1 class="view"> View All Details</h1>
+                        <table class="table table-bordered table-hover">
+                              <thead>
+                                    <tr>
+                                          <th>Sr No</th>
+                                          <th>Name</th>
+                                          
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    <%if(typeof(error)!='undefined'||category && category.length<=0){%>
+                                          <tr>
+                                                <td>Category not found</td>
+                                          </tr>
+                                          <%}else {%>
+                                                <%for(let i of category){%>
+                                                      <tr>
+                                                            <td>
+                                                                  <%=i.id%>
+                                                            </td>
+                                                            <td>
+                                                                  <%=i.name%>
+                                                            </td>
+                                                            <td>
+                                                                  <%=i.created_by%>
+                                                            </td>
+                                                            <td>
+                                                                  <%=i.updated_by%>
+                                                            </td>
+                                                            <td>
+                                                                  <a href="/category/<%=i.id%>"
+                                                                        class="btn btn-primary">View</a>
+                                                                  <a href="/category/update/<%=i.id%>"
+                                                                        class="btn btn-dark">Update</a>
+                                                                  <%if(i.is_deleted==false){%>
+                                                                        <!--&&permissions.category_delete-->
+                                                                        <form action="/category/delete/<%=i.id%>"
+                                                                              method="post">
+                                                                              <input type="submit" value="Delete"
+                                                                                    class="btn btn-outline-danger">
+                                                                        </form>
+                                                                        <%}%>
+                                                                         <%if(i.is_deleted==true){%>
+                                                                                    <!--&&permissions.category_delete-->
+                                                                                    <form action="/category/restore/<%=i.id%>"
+                                                                                          method="post">
+                                                                                          <input type="submit"
+                                                                                                value="Restore"
+                                                                                                class="btn btn-outline-success">
+                                                                                    </form>
+                                                                                    <%}%>
+                                                            </td>
+                                                      </tr>
+                                                      <%}%>
+                                                            <%}%>
+                              </tbody>
+                        </table>
+                        <div class="col-sm-12">
+                              <% let totalPage=Math.ceil(total/limit);%> 
+                                    <%for(let i=1;i<=totalPage;i++){%>
+                                          <% let url=`/category?limit=${limit}&&page=${i}`%>
+                                                <a href="<%=url%>" class="btn btn-light">
+                                                      <%=i%>
+                                                </a>
+                                                <%}%>
+                        </div>
+                  </div>
+            </div>
+</body>
+<%- include('../component/footer') %>
+
+</html>
